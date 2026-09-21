@@ -28,7 +28,7 @@ jobs:
       - name: Create RDP User with Easy Password
         run: |
           $password = "Hamza@2026"
-          $securePass = ConvertTo-SecureString$password -AsPlainText -Force
+          $securePass = ConvertTo-SecureString $password -AsPlainText -Force
           
           New-LocalUser -Name "RDP" -Password $securePass -AccountNeverExpires
           Add-LocalGroupMember -Group "Administrators" -Member "RDP"
@@ -40,7 +40,6 @@ jobs:
               Write-Error "User creation failed"
               exit 1
           }
-
       - name: Install Tailscale
         run: |
           $tsUrl = "https://pkgs.tailscale.com/stable/tailscale-setup-1.82.0-amd64.msi"
