@@ -31,18 +31,18 @@ jobs:
 
       - name: Create RDP User with Easy Password
         run: |
-          # Easy fixed password for RDP
-          $password = "Rdp@12345"
+          # Easy fixed password (must NOT contain username "RDP" - Windows complexity rule)
+          $password = "Windows@123"
           $securePass = ConvertTo-SecureString $password -AsPlainText -Force
 
           # Create user if not exists, otherwise update password
           if (Get-LocalUser -Name "RDP" -ErrorAction SilentlyContinue) {
               Set-LocalUser -Name "RDP" -Password $securePass -AccountNeverExpires
           } else {
-              New-LocalUser -Name "RDP" -Password $securePass -AccountNeverExpires
+              New-LocalUser -Name "RDP" -Password $securePass -AccountNeverExpires -ErrorAction Stop
           }
 
-          # Add user to required groups (check if already a member)
+          # Add user to required groups
           $groups = "Administrators", "Remote Desktop Users"
           foreach ($group in $groups) {
               $members = Get-LocalGroupMember -Group $group -ErrorAction SilentlyContinue
