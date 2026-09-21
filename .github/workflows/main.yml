@@ -27,7 +27,7 @@ jobs:
 
       - name: Create RDP User with Easy Password
         run: |
-          $password = "hamza"
+          $password = "Hamza@2026"
           $securePass = ConvertTo-SecureString$password -AsPlainText -Force
           
           New-LocalUser -Name "RDP" -Password $securePass -AccountNeverExpires
